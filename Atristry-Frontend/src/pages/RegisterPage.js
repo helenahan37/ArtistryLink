@@ -127,23 +127,7 @@ export default function Register() {
 					</form>
 
 					<div className="flex font-semibold leading-6 items-start mt-8 mb-3">
-						<div className="flex items-center h-5">
-							<input
-								id="terms"
-								aria-describedby="terms"
-								type="checkbox"
-								className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-								required=""
-							/>
-						</div>
-						<div className=" font-semibold leading-6 ml-3 text-sm ">
-							<label for="terms" className="text-sm text-gray-500 dark:text-gray-300 mt-3">
-								I accept the{' '}
-								<Link class="font-medium text-primary-600 hover:underline dark:text-primary-500" to="#">
-									Terms and Conditions
-								</Link>
-							</label>
-						</div>
+						<div className="flex items-center h-5"></div>
 					</div>
 					<div className=" flex items-start ">
 						<p className="text-sm  text-gray-500 ">

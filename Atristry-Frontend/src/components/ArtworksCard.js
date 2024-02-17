@@ -1,12 +1,12 @@
 import CommentPopup from './CommentPopup';
-import { ChatBubbleOvalLeftEllipsisIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
+
 import { Link } from 'react-router-dom';
 import { usePopup } from '../hooks/usePopup';
 import baseURL from '../utils/baseURL';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { BsHeartFill, BsChatSquareHeart } from 'react-icons/bs';
 
 export default function ArtworksCard({ artwork }) {
 	const { showPopup, openPopup, closePopup } = usePopup();
@@ -14,7 +14,6 @@ export default function ArtworksCard({ artwork }) {
 
 	const { artworkImg, title, description, id } = artwork;
 	const [isFavorited, setIsFavorited] = useState(false);
-	const [isReported, setIsReported] = useState(false);
 
 	useEffect(() => {
 		const storedFavoritedArtworks = JSON.parse(localStorage.getItem('favoritedArtworks')) || {};
@@ -49,51 +48,21 @@ export default function ArtworksCard({ artwork }) {
 		}
 	};
 
-	const handleReportClick = async () => {
-		try {
-			const config = {
-				headers: {
-					Authorization: `Bearer ${userToken}`,
-					'Content-Type': 'application/json',
-				},
-			};
-
-			const payload = {
-				artworkId: id,
-			};
-
-			await axios.post(`${baseURL}/artworks/${id}/report`, payload, config);
-			setIsReported(true);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	return (
 		<div key={id} className="group relative mb-4">
 			<div className="relative">
 				<img src={artworkImg} alt={title} className="w-full h-auto object-cover rounded-lg" />
 
-				<div className="absolute top-0 right-0 mt-2 mr-2">
-					<button onClick={handleReportClick}>
-						{isReported ? (
-							<ExclamationTriangleIcon className="w-6 h-6 text-yellow-500" />
-						) : (
-							<ExclamationTriangleIcon className="w-6 h-6 text-gray-500 hover:text-yellow-500" />
-						)}
-					</button>
-				</div>
-
 				<div className="absolute bottom-0 right-0 mb-4 mr-4 flex space-x-2">
-					<button onClick={handleFavoriteClick} className="text-gray-600 hover:text-pink-600 focus:outline-none">
+					<button onClick={handleFavoriteClick} className="text-white hover:text-pink-600 focus:outline-none">
 						{isFavorited ? (
-							<IoHeart className="w-6 h-6 text-pink-600" />
+							<BsHeartFill className="w-6 h-6 text-pink-600" />
 						) : (
-							<IoHeartOutline className="w-6 h-6 hover:text-pink-600" />
+							<BsHeartFill className="w-6 h-6 hover:text-pink-600" />
 						)}
 					</button>
-					<button onClick={openPopup} className="text-gray-600 hover:text-indigo-600 focus:outline-none">
-						<ChatBubbleOvalLeftEllipsisIcon className="w-6 h-6" />
+					<button onClick={openPopup} className="text-white hover:text-indigo-600 focus:outline-none">
+						<BsChatSquareHeart className="w-6 h-6" />
 					</button>
 				</div>
 

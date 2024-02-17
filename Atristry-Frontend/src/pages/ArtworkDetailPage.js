@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import {
-	ChatBubbleOvalLeftEllipsisIcon,
-	ExclamationTriangleIcon,
-	ArrowUturnLeftIcon,
-} from '@heroicons/react/24/outline';
+import { BsHeartFill, BsChatSquareHeart } from 'react-icons/bs';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { usePopup } from '../hooks/usePopup';
@@ -14,9 +10,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import baseURL from '../utils/baseURL';
 import { useSelector } from 'react-redux';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { fetchCommentsByArtworkId } from '../redux/slices/comments';
 import { useDispatch } from 'react-redux';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 export default function ArtworkDetailPage({ artwork }) {
 	const dispatch = useDispatch();
@@ -56,7 +52,6 @@ export default function ArtworkDetailPage({ artwork }) {
 
 	const userToken = useSelector((state) => state.users?.userAuth?.userInfo?.token);
 	const [isFavorited, setIsFavorited] = useState(false);
-	const [isReported, setIsReported] = useState(false);
 
 	useEffect(() => {
 		const storedFavoritedArtworks = JSON.parse(localStorage.getItem('favoritedArtworks')) || {};
@@ -91,26 +86,6 @@ export default function ArtworkDetailPage({ artwork }) {
 		}
 	};
 
-	const handleReportClick = async () => {
-		try {
-			const config = {
-				headers: {
-					Authorization: `Bearer ${userToken}`,
-					'Content-Type': 'application/json',
-				},
-			};
-
-			const payload = {
-				artworkId: id,
-			};
-
-			await axios.post(`${baseURL}/artworks/${id}/report`, payload, config);
-			setIsReported(true);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	const handleXClick = function () {
 		navigate(-1);
 	};
@@ -125,16 +100,8 @@ export default function ArtworkDetailPage({ artwork }) {
 					<div className="relative">
 						<img src={selectedArtwork.artworkImg} alt={''} className="h-3/4 object-cover rounded-lg" />
 						{/* X Icon */}
-						<button className="absolute top-0 right-0 mt-2 mr-10" onClick={handleXClick}>
-							<ArrowUturnLeftIcon className="w-6 h-6 text-gray-500" />
-						</button>
-						{/* Exclamation Icon */}
-						<button className="absolute top-0 right-0 mt-2 mr-2" onClick={handleReportClick}>
-							{isReported ? (
-								<ExclamationTriangleIcon className="w-6 h-6 text-yellow-500" />
-							) : (
-								<ExclamationTriangleIcon className="w-6 h-6 text-gray-500 hover:text-yellow-500" />
-							)}
+						<button className="absolute top-0 right-0 mt-2 mr-6" onClick={handleXClick}>
+							<IoArrowBackOutline className="w-8 h-8 text-gray-500" />
 						</button>
 
 						{/* Heart Icon */}
@@ -142,9 +109,9 @@ export default function ArtworkDetailPage({ artwork }) {
 							className="absolute bottom-0 right-0 mb-2 mr-12 flex items-center space-x-1 text-gray-600 hover:text-pink-600 focus:outline-none"
 							onClick={handleFavoriteClick}>
 							{isFavorited ? (
-								<IoHeart className="w-6 h-6 text-pink-600" />
+								<BsHeartFill className="w-6 h-6 text-pink-600" />
 							) : (
-								<IoHeartOutline className="w-6 h-6 hover:text-pink-600" />
+								<BsHeartFill className="w-6 h-6 hover:text-pink-600" />
 							)}
 						</button>
 
@@ -153,7 +120,7 @@ export default function ArtworkDetailPage({ artwork }) {
 							onClick={openPopup}
 							className="absolute bottom-0 right-0 mb-2 mr-2 flex items-center space-x-1 text-gray-600 hover:text-indigo-600 focus:outline-none">
 							{/* <Link to={`/comments/${id}`}> */}
-							<ChatBubbleOvalLeftEllipsisIcon className="w-6 h-6" />
+							<BsChatSquareHeart className="w-6 h-6" />
 							{/* </Link> */}
 						</button>
 						{showPopup && <CommentPopup onClose={closePopup} artworkID={id} />}
