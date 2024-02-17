@@ -6,7 +6,7 @@ import baseURL from '../utils/baseURL';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { BsHeartFill, BsChatSquareHeart } from 'react-icons/bs';
+import { BsHeartFill, BsChatSquareHeartFill } from 'react-icons/bs';
 
 export default function ArtworksCard({ artwork }) {
 	const { showPopup, openPopup, closePopup } = usePopup();
@@ -62,7 +62,7 @@ export default function ArtworksCard({ artwork }) {
 						)}
 					</button>
 					<button onClick={openPopup} className="text-white hover:text-indigo-600 focus:outline-none">
-						<BsChatSquareHeart className="w-6 h-6" />
+						<BsChatSquareHeartFill className="w-6 h-6" />
 					</button>
 				</div>
 
