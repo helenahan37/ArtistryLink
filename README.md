@@ -7,6 +7,8 @@ Developed using the MERN stack, enhanced with Redux for state management, and st
 
 Developed using MERN stack, integrated with Stripe for secure payment processing. Styling with Tailwind css.
 
+Deployed Link: [ArtistryLink](https://artistrylink.netlify.app/)
+
 ![HomePage](./demo/homepage.png)
 ![profilepage](./demo/profilepage.png)
 ![gallerypage](./demo/mygallerypage.png)
