@@ -1,3 +1,3 @@
-const baseURL = 'http://localhost:5000';
+const baseURL = 'https://artistrylink-vaio.onrender.com';
 
 export default baseURL;
