@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { BsHeartFill, BsChatSquareHeart } from 'react-icons/bs';
+import { BsHeartFill, BsChatSquareHeart, BsChatSquareHeartFill } from 'react-icons/bs';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { usePopup } from '../hooks/usePopup';
@@ -106,7 +106,7 @@ export default function ArtworkDetailPage({ artwork }) {
 
 						{/* Heart Icon */}
 						<button
-							className="absolute bottom-0 right-0 mb-2 mr-12 flex items-center space-x-1 text-gray-600 hover:text-pink-600 focus:outline-none"
+							className="absolute bottom-0 right-0 mb-2 mr-12 flex items-center space-x-1 text-white hover:text-pink-600 focus:outline-none"
 							onClick={handleFavoriteClick}>
 							{isFavorited ? (
 								<BsHeartFill className="w-6 h-6 text-pink-600" />
@@ -118,9 +118,9 @@ export default function ArtworkDetailPage({ artwork }) {
 						{/* Comment Icon */}
 						<button
 							onClick={openPopup}
-							className="absolute bottom-0 right-0 mb-2 mr-2 flex items-center space-x-1 text-gray-600 hover:text-indigo-600 focus:outline-none">
+							className="absolute bottom-0 right-0 mb-2 mr-2 flex items-center space-x-1 text-white hover:text-indigo-600 focus:outline-none">
 							{/* <Link to={`/comments/${id}`}> */}
-							<BsChatSquareHeart className="w-6 h-6" />
+							<BsChatSquareHeartFill className="w-6 h-6" />
 							{/* </Link> */}
 						</button>
 						{showPopup && <CommentPopup onClose={closePopup} artworkID={id} />}
@@ -154,8 +154,8 @@ export default function ArtworkDetailPage({ artwork }) {
 					<div>
 						<button
 							onClick={openPopup}
-							className="mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-8 py-2 text-sm font-medium text-gray-900 hover:bg-indigo-500 hover:text-white sm:w-auto lg:w-full">
-							Write a review
+							className="mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-8 py-2 text-large font-medium text-gray-900 hover:bg-indigo-500 hover:text-white sm:w-auto lg:w-full">
+							Write a comment
 						</button>
 					</div>
 				</div>
@@ -165,7 +165,11 @@ export default function ArtworkDetailPage({ artwork }) {
 					{comments && comments.length > 0 ? (
 						comments.map((comment) => <CommentCard key={comment.id} comment={comment} />)
 					) : (
-						<p>No comments yet.</p>
+						<div className="flex flex-col items-center justify-center p-10">
+							<BsChatSquareHeart className="w-12 h-12 text-gray-400" /> {/* 示例图标 */}
+							<p className="mt-2 text-lg font-semibold text-gray-600">No comments yet</p>
+							<p className="text-sm text-gray-500">Be the first to share what you think!</p>
+						</div>
 					)}
 				</div>
 			</div>
