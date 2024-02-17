@@ -1,5 +1,4 @@
 import React from 'react';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 //
 export default function CommentCard({ comment }) {
@@ -14,9 +13,7 @@ export default function CommentCard({ comment }) {
 				<div className="flex-none py-10">
 					<img src={avatarImg} alt="" className="h-10 w-10  rounded-full bg-gray-100" />
 				</div>
-				<button className="absolute top-0 right-0 m-2 mr-2 text-gray-500">
-					<ExclamationTriangleIcon className="w-6 h-6 mr-2" />
-				</button>
+
 				<div className="flex items-start flex-col">
 					<h3 className=" font-medium p-3 text-gray-900">
 						<Link

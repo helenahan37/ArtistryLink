@@ -94,11 +94,11 @@ export default function ArtworkDetailPage({ artwork }) {
 		<>
 			{' '}
 			<Header />
-			<div className="bg-white mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 flex flex-col sm:flex-row justify-between items-center">
+			<div className="bg-white mx-auto max-w-2xl px-4 py-16 lg:max-w-7xl lg:px-8 flex flex-col justify-between items-center">
 				{/* description div */}
 				<div className="flex flex-col relative w-full lg:w-1/2 px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
 					<div className="relative">
-						<img src={selectedArtwork.artworkImg} alt={''} className="h-3/4 object-cover rounded-lg" />
+						<img src={selectedArtwork.artworkImg} alt={''} className="h-auto w-full object-cover rounded-lg" />
 						{/* X Icon */}
 						<button className="absolute top-0 right-0 mt-2 mr-6" onClick={handleXClick}>
 							<IoArrowBackOutline className="w-8 h-8 text-gray-500" />
@@ -151,10 +151,17 @@ export default function ArtworkDetailPage({ artwork }) {
 							</p>
 						</div>
 					</div>
+					<div>
+						<button
+							onClick={openPopup}
+							className="mt-6 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-8 py-2 text-sm font-medium text-gray-900 hover:bg-indigo-500 hover:text-white sm:w-auto lg:w-full">
+							Write a review
+						</button>
+					</div>
 				</div>
 				{/* comment div */}
 				{/* <div className=" w-full   p-8 mt-8 sm:mt-0  "> */}
-				<div className="w-full lg:w-1/2  sm:px-6 lg:px-8 xl:block overflow-y-auto" style={{ maxHeight: '50vh' }}>
+				<div className="w-full lg:w-1/2 px-4 py-10 lg:px-8 lg:py-6 overflow-y-auto" style={{ maxHeight: '50vh' }}>
 					{comments && comments.length > 0 ? (
 						comments.map((comment) => <CommentCard key={comment.id} comment={comment} />)
 					) : (
