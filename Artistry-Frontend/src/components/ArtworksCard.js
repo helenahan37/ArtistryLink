@@ -69,7 +69,7 @@ export default function ArtworksCard({ artwork }) {
 				{showPopup && <CommentPopup onClose={closePopup} artworkID={id} />}
 			</div>
 
-			<div className="bg-white bg-opacity-80 py-4 px-4 flex justify-between">
+			<div className="bg-white bg-opacity-80 py-4 px-4 flex justify-center items-center flex-col">
 				<div>
 					<Link to={`/artworks/${id}`}>
 						<h3 className="text-lg hover:underline font-semibold">{title}</h3>
