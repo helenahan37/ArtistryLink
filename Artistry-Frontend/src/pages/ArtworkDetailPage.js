@@ -137,7 +137,7 @@ export default function ArtworkDetailPage({ artwork }) {
 					</div>
 
 					<div className="border border-gray-300 rounded-lg mt-3">
-						<div className="px-4 py-3 text-gray-600">Description: {selectedArtwork.description}</div>
+						<div className="px-4 py-3 text-gray-600 ">Description: {selectedArtwork.description}</div>
 					</div>
 					<div className="border border-gray-300 rounded-lg mt-3">
 						<div className="px-4 py-3 text-gray-600">
