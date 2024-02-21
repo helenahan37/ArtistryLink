@@ -10,8 +10,9 @@ Developed using MERN stack, integrated with Stripe for secure payment processing
 Deployed Link: [ArtistryLink](https://artistrylink.netlify.app/)
 
 ![HomePage](./demo/homepage.png)
+![artworkdetail](./demo/detailpage.png)
 ![profilepage](./demo/profilepage.png)
 ![gallerypage](./demo/mygallerypage.png)
 ![settingpage](./demo/settingpage.png)
 ![uploadpage](./demo/uploadpage.png)
-![artworkdetail](./demo/detailpage.png)
+
