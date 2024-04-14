@@ -2,6 +2,8 @@ const User = require('../models/UserModel');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
+const Artwork = require('../models/ArtworkModel');
+const Comment = require('../models/CommentModel');
 
 // @desc    Register user
 // @route   POST users/register
@@ -150,13 +152,13 @@ const deleteUser = asyncHandler(async (req, res) => {
 		await Artwork.deleteMany({ user: user._id });
 		await Comment.deleteMany({ user: user._id });
 
-		await User.deleteOne({ _id: user._id }); // Changed from remove() to deleteOne()
+		await User.deleteOne({ _id: user._id });
 		res.json({
 			status: 'success',
 			message: 'User and all related data deleted successfully',
 		});
 	} catch (error) {
-		next(error); // Make sure to handle errors appropriately
+		next(error);
 	}
 });
 
