@@ -140,12 +140,16 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const user = await User.findByIdAndDelete(req.userAuthId);
+	const user = await User.findById(req.userAuthId);
 
+	if (!user) {
+		return res.status(404).json({ status: 'error', message: 'User not found' });
+	}
+
+	await user.remove(); // This triggers the pre('remove') middleware
 	res.json({
 		status: 'success',
-		message: 'User deleted successfully',
-		user,
+		message: 'User and all related data deleted successfully',
 	});
 });
 
