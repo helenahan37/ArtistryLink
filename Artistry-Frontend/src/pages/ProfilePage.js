@@ -12,8 +12,9 @@ export default function ProfilePage() {
 	//upload file form state
 	const { userId } = useParams();
 	const [showFileForm, setShowFileForm] = useState(false);
-	const { profile } = useSelector((state) => state.users);
-	const isOwnProfile = profile?.isOwnProfile;
+	const { userAuth, profile } = useSelector((state) => state.users);
+	const isOwnProfile = userId === userAuth.userInfo?._id;
+
 	// when user click upload button - open the form
 	const openFileForm = () => {
 		setShowFileForm(true);
@@ -26,8 +27,10 @@ export default function ProfilePage() {
 	//dispatch
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getUserProfileAction(userId));
-	}, [userId, dispatch]);
+		if (isOwnProfile) {
+			dispatch(getUserProfileAction());
+		}
+	}, [userId, dispatch, isOwnProfile]);
 	//get data from store
 	const artworks = profile?.user?.artworks || [];
 
