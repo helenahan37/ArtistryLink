@@ -1,5 +1,4 @@
 const User = require('../models/UserModel');
-const { startSession } = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
