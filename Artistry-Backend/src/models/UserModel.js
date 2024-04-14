@@ -70,8 +70,8 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('remove', async function (next) {
-	await this.model('Artwork').deleteMany({ owner: this._id });
-	await this.model('Comment').deleteMany({ author: this._id });
+	await this.model('Artwork').deleteMany({ user: this._id });
+	await this.model('Comment').deleteMany({ user: this._id });
 	next();
 });
 

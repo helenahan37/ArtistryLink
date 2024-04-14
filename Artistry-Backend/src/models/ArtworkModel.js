@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ArtworkSchema = new mongoose.Schema(
 	{
-		owner: {
+		user: {
 			type: mongoose.Types.ObjectId,
 			ref: 'User',
 			required: true,
