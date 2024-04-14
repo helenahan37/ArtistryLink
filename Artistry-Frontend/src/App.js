@@ -39,7 +39,7 @@ function App() {
 					<Route path="/settings" element={<SettingPage />} />
 					<Route path="/gallery" element={<GalleryPage />} />
 					<Route path="/artworks/:id" element={<ArtworkDetailPage />} />
-					<Route path="/users/:userId/profile" element={<AuthorProfile />} />
+					<Route path="/users/profile/:userId" element={<AuthorProfile />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
