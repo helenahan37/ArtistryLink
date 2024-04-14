@@ -69,15 +69,6 @@ const UserSchema = new mongoose.Schema({
 	},
 });
 
-UserSchema.pre('remove', async function (next) {
-	const artworks = await this.model('Artwork').find({ user: this._id });
-	for (const artwork of artworks) {
-		await artwork.remove(); // This triggers ArtworkSchema's pre-remove middleware
-	}
-	await this.model('Comment').deleteMany({ user: this._id });
-	next();
-});
-
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
