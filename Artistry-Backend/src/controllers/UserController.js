@@ -10,32 +10,37 @@ const Comment = require('../models/CommentModel');
 // @access  Private
 const registerUser = asyncHandler(async (req, res) => {
 	const { email, password, username, isAdmin } = req.body;
-	//Check user exists
+	// Check if email already exists
 	const userExists = await User.findOne({ email });
 	if (userExists) {
-		throw new Error('User already exists');
+		return res.status(400).json({ message: 'Email already exists' });
 	}
-	//Check username exists
+
+	// Check if username already exists
 	const usernameExists = await User.findOne({ username });
 	if (usernameExists) {
-		throw new Error('Username already exists');
+		return res.status(400).json({ message: 'Username already exists' });
 	}
 	//hash password
 	const salt = await bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(password, salt);
 
 	//create the user
-	const user = await User.create({
-		username,
-		email,
-		password: hashedPassword,
-		isAdmin,
-	});
-	res.status(201).json({
-		status: 'success',
-		message: 'User Registered Successfully',
-		data: user,
-	});
+	try {
+		const user = await User.create({
+			username,
+			email,
+			password: hashedPassword,
+			isAdmin,
+		});
+		res.status(201).json({
+			status: 'success',
+			message: 'User Registered Successfully',
+			data: user,
+		});
+	} catch (err) {
+		res.status(500).json({ message: err.message || 'Failed to register user' });
+	}
 });
 
 // @desc    Login user
@@ -133,8 +138,7 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const userId = req.userAuthId;
-	const user = await User.findById(userId);
+	const user = await User.findById(req.params.id).populate('artworks').populate('comments');
 
 	if (!user) {
 		res.status(404).json({ message: 'User not found' });
