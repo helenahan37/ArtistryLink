@@ -26,23 +26,21 @@ const registerUser = asyncHandler(async (req, res) => {
 	const hashedPassword = await bcrypt.hash(password, salt);
 
 	//create the user
-	try {
-		const user = await User.create({
-			username,
-			email,
-			password: hashedPassword,
-			isAdmin,
-		});
-		res.status(201).json({
-			status: 'success',
-			message: 'User Registered Successfully',
-			data: user,
-		});
-	} catch (err) {
-		res.status(500).json({ message: err.message || 'Failed to register user' });
-	}
-});
+	const user = new User({
+		username,
+		email,
+		password: hashedPassword,
+		isAdmin,
+	});
 
+	await user.save();
+
+	res.status(201).json({
+		status: 'success',
+		message: 'User Registered Successfully',
+		data: user,
+	});
+});
 // @desc    Login user
 // @route   POST users/login
 // @access  Public
