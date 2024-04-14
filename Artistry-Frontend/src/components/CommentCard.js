@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 //
 export default function CommentCard({ comment }) {
 	// Filter comments based on the selected artwork's id
-	const avatarImg = comment.user?.userAvatarImg; // Update based on your actual data structure
-	const username = comment.user?.username; // Update based on your actual data structure
+	const avatarImg = comment.user.userAvatarImg;
+	const username = comment.user.username;
 	const content = comment.content;
 
 	return (
