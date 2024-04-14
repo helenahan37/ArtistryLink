@@ -72,8 +72,16 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('remove', async function (next) {
-	await Artwork.deleteMany({ user: this._id });
-	await Comment.deleteMany({ user: this._id });
+	console.log(`Deleting artworks and comments for user ${this._id}`);
+	try {
+		const artworksResult = await Artwork.deleteMany({ user: this._id });
+		console.log(`Artworks deleted: ${artworksResult.deletedCount}`);
+		const commentsResult = await Comment.deleteMany({ user: this._id });
+		console.log(`Comments deleted: ${commentsResult.deletedCount}`);
+	} catch (error) {
+		console.error('Error deleting related data:', error);
+		return next(error);
+	}
 	next();
 });
 const User = mongoose.model('User', UserSchema);
