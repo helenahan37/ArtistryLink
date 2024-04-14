@@ -1,5 +1,4 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/outline';
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import FileUploadForm from '../components/FileUploadForm';
 import ArtworksCard from '../components/ArtworksCard';
@@ -9,10 +8,8 @@ import { useEffect } from 'react';
 
 export default function ProfilePage() {
 	//upload file form state
-	const { userId } = useParams();
 	const [showFileForm, setShowFileForm] = useState(false);
-	const { userAuth, profile } = useSelector((state) => state.users);
-	const isOwnProfile = userId === userAuth.userInfo?._id;
+	const { profile } = useSelector((state) => state.users);
 
 	const openFileForm = () => {
 		setShowFileForm(true);
@@ -25,10 +22,8 @@ export default function ProfilePage() {
 	//dispatch
 	const dispatch = useDispatch();
 	useEffect(() => {
-		if (isOwnProfile) {
-			dispatch(getUserProfileAction());
-		}
-	}, [userId, dispatch, isOwnProfile]);
+		dispatch(getUserProfileAction());
+	}, [dispatch]);
 	//get data from store
 	const artworks = profile?.user?.artworks || [];
 
@@ -57,15 +52,13 @@ export default function ProfilePage() {
 						</span>
 					</span>
 					<div>
-						{isOwnProfile && (
-							<button
-								type="button"
-								onClick={openFileForm}
-								class="my-5 w-full flex justify-center  hover:text-grey-500 p-4  rounded-full tracking-wide
+						<button
+							type="button"
+							onClick={openFileForm}
+							class="my-5 w-full flex justify-center  hover:text-grey-500 p-4  rounded-full tracking-wide
                                     font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 hover:text-white shadow-lg cursor-pointer transition ease-in duration-300">
-								Upload Artwork
-							</button>
-						)}
+							Upload Artwork
+						</button>
 					</div>
 					<div className="px-6">
 						<div className="flex flex-wrap justify-center">

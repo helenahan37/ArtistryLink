@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorProfileAction } from '../redux/slices/users';
 import { CheckBadgeIcon } from '@heroicons/react/24/outline';
 import ArtworksCard from '../components/ArtworksCard';
+import FileUploadForm from '../components/FileUploadForm';
 
 const UserProfilePage = () => {
 	const { userId } = useParams();
@@ -13,13 +15,34 @@ const UserProfilePage = () => {
 		dispatch(getAuthorProfileAction(userId));
 	}, [userId, dispatch]);
 
-	const { authorProfile } = useSelector((state) => state?.users);
+	//upload file form state
+	const [showFileForm, setShowFileForm] = useState(false);
+
+	const openFileForm = () => {
+		setShowFileForm(true);
+	};
+
+	const closeFileForm = () => {
+		setShowFileForm(false);
+	};
+
+	const { authorProfile, profile } = useSelector((state) => state?.users);
 
 	//get data from store
 	const artworks = authorProfile?.user?.artworks || [];
 
+	const isOwnProfile = profile?.user?._id === authorProfile?.user?._id;
+	console.log(isOwnProfile);
+
 	return (
 		<>
+			{showFileForm && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 z-50 backdrop-filter backdrop-blur-lg flex justify-center items-center">
+					<div className="max-w-xl w-3/4 ">
+						<FileUploadForm onClose={closeFileForm} />
+					</div>
+				</div>
+			)}
 			<div className="relative block h-500-px">
 				<div>
 					<img
@@ -35,7 +58,17 @@ const UserProfilePage = () => {
 							<CheckBadgeIcon />
 						</span>
 					</span>
-
+					<div>
+						{isOwnProfile && (
+							<button
+								type="button"
+								onClick={openFileForm}
+								class="my-5 w-full flex justify-center  hover:text-grey-500 p-4  rounded-full tracking-wide
+                                    font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 hover:text-white shadow-lg cursor-pointer transition ease-in duration-300">
+								Upload Artwork
+							</button>
+						)}
+					</div>
 					<div className="px-6">
 						<div className="flex flex-wrap justify-center">
 							<div className="w-full lg:w-4/12 px-4 lg:order-1"></div>

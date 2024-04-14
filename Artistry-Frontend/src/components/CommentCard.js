@@ -18,7 +18,7 @@ export default function CommentCard({ comment }) {
 					<h3 className=" font-medium p-3 text-gray-900">
 						<Link
 							className="text-gray-600 font-semibold text-lg  hover:text-indigo-800 transition duration-300 ease-in-out hover:underline"
-							to={`/users/${comment.user?._id}/profile`}>
+							to={`/users/profile/${comment.user?._id}`}>
 							{username}
 						</Link>
 					</h3>
