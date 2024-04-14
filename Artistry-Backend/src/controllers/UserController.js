@@ -140,7 +140,7 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.params.id);
+	const user = await User.findById(req.userAuthId);
 
 	if (!user) {
 		return res.status(404).json({ message: 'User not found' });
