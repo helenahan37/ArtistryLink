@@ -93,7 +93,7 @@ export const getAuthorProfileAction = createAsyncThunk(
 	'users/fetchAuthorProfile',
 	async (authorId, { rejectWithValue }) => {
 		try {
-			const { data } = await axios.get(`${baseURL}/users/${authorId}/profile`);
+			const { data } = await axios.get(`${baseURL}/users/profile/${authorId}/`);
 			return data;
 		} catch (error) {
 			console.log(error);
