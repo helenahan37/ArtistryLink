@@ -141,13 +141,13 @@ const deleteUser = asyncHandler(async (req, res) => {
 		}
 
 		// Delete all related artworks
-		await Artwork.deleteMany({ user: user._id }, { session });
+		await Artwork.deleteMany({ user: user._id }).session(session);
 
 		// Delete all related comments
-		await Comment.deleteMany({ user: user._id }, { session });
+		await Comment.deleteMany({ user: user._id }).session(session);
 
 		// Delete the user
-		await User.findByIdAndDelete(user._id, { session });
+		await user.remove();
 
 		// Commit the transaction
 		await session.commitTransaction();
