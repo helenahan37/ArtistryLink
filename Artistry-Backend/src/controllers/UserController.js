@@ -146,11 +146,18 @@ const deleteUser = asyncHandler(async (req, res) => {
 		return res.status(404).json({ message: 'User not found' });
 	}
 
-	await user.remove();
-	res.json({
-		status: 'success',
-		message: 'User and all related data deleted successfully',
-	});
+	try {
+		await Artwork.deleteMany({ user: user._id });
+		await Comment.deleteMany({ user: user._id });
+
+		await User.deleteOne({ _id: user._id }); // Changed from remove() to deleteOne()
+		res.json({
+			status: 'success',
+			message: 'User and all related data deleted successfully',
+		});
+	} catch (error) {
+		next(error); // Make sure to handle errors appropriately
+	}
 });
 
 module.exports = {
