@@ -69,23 +69,39 @@ export const signOutAction = createAsyncThunk(
 
 //get looged in user profile action
 export const getUserProfileAction = createAsyncThunk(
-	'users/fetchUserProfile',
-	async (userId, { rejectWithValue, getState, dispatch }) => {
+	'users/fetchloggedinProfile',
+	async (playload, { rejectWithValue, getState, dispatch }) => {
 		try {
+			//get token
 			const token = getState()?.users?.userAuth?.userInfo?.token;
 			const config = {
-				headers: { Authorization: `Bearer ${token}` },
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			};
-			const url = userId ? `${baseURL}/users/profile/${userId}` : `${baseURL}/users/profile`;
-			const { data } = await axios.get(url, config);
+			const { data } = await axios.get(`${baseURL}/users/profile/userId`, config);
 			return data;
 		} catch (error) {
-			console.error(error);
+			console.log(error);
 			return rejectWithValue(error?.response?.data);
 		}
 	}
 );
-//
+
+//get userid profile action
+export const getAuthorProfileAction = createAsyncThunk(
+	'users/fetchAuthorProfile',
+	async (authorId, { rejectWithValue }) => {
+		try {
+			const { data } = await axios.get(`${baseURL}/users/${authorId}/profile`);
+			return data;
+		} catch (error) {
+			console.log(error);
+			return rejectWithValue(error?.response?.data);
+		}
+	}
+);
+
 //update user profile action
 export const updateUserProfileAction = createAsyncThunk(
 	'users/updateProfile',
@@ -182,6 +198,19 @@ const usersSlice = createSlice({
 		});
 		builder.addCase(getUserProfileAction.rejected, (state, action) => {
 			state.error = null;
+			state.loading = false;
+		});
+
+		//profile
+		builder.addCase(getAuthorProfileAction.pending, (state, action) => {
+			state.loading = true;
+		});
+		builder.addCase(getAuthorProfileAction.fulfilled, (state, action) => {
+			state.authorProfile = action.payload;
+			state.loading = false;
+		});
+		builder.addCase(getAuthorProfileAction.rejected, (state, action) => {
+			state.error = action.payload;
 			state.loading = false;
 		});
 

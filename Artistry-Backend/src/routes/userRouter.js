@@ -15,7 +15,7 @@ const userRoutes = express.Router();
 userRoutes
 	.post('/register', registerUser)
 	.post('/login', loginUser)
-	.get('/profile/:userId?', checkLoggedIn, getUserProfile) // Access for logged-in users and only account owner can access the profile
+	.get('/profile/:userId', checkLoggedIn, getUserProfile) // Access for logged-in users and only account owner can access the profile
 	.patch('/settings', checkLoggedIn, avatarsUpload.single('file'), updateUserDetails) //Access for logged-in users and only account owner can access the setting page
 	.delete('/settings/delete', checkLoggedIn, deleteUser); //Access for logged-in users and only account owner can delete the account
 

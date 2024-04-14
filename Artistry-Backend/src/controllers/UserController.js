@@ -72,17 +72,16 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   GET users/profile
 // @access  Private/Admin
 const getUserProfile = async (req, res) => {
-	const userId = req.params.id || req.user?._id; // 如果没有提供id，则使用当前登录用户的ID
-
 	try {
-		const user = await User.findById(userId).populate('artworks').populate('comments');
-		if (!user) {
-			return res.status(404).json({ message: 'User not found' });
-		}
-		const isOwnProfile = req.user && req.user._id.toString() === userId.toString(); // 判断当前资料是否属于登录用户
-		res.json({ user, isOwnProfile });
-	} catch (error) {
-		res.status(500).send({ message: 'Error fetching user profile', error: error.message });
+		const user = await User.findById(req?.userAuthId).populate('artworks').populate('comments').populate('favArtworks');
+
+		res.json({
+			status: 'success',
+			message: 'User profile fetched successfully',
+			user,
+		});
+	} catch {
+		throw new Error('You do not have access to this profile');
 	}
 };
 

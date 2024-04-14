@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import ArtworkDetailPage from './pages/ArtworkDetailPage';
 import SettingPage from './pages/SettingPage';
 import GalleryPage from './pages/GalleryPage';
+import AuthorProfile from './components/AuthorProfile';
 import AuthRoute from './components/routesProtector/AuthRoute';
 import UserHeader from './components/UserHeader';
 import Header from './components/Header';
@@ -26,7 +27,7 @@ function App() {
 					<Route exact path="/" element={<LandingPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
 					<Route
-						path="/profile/:userId"
+						path="/profile"
 						element={
 							<AuthRoute>
 								<ProfilePage />
@@ -38,6 +39,7 @@ function App() {
 					<Route path="/settings" element={<SettingPage />} />
 					<Route path="/gallery" element={<GalleryPage />} />
 					<Route path="/artworks/:id" element={<ArtworkDetailPage />} />
+					<Route path="/users/:userId/profile" element={<AuthorProfile />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
