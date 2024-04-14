@@ -133,34 +133,14 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const session = await startSession();
-	try {
-		session.startTransaction();
+	const userId = req.userAuthId;
+	const user = await User.findById(userId);
 
-		const userId = req.userAuthId;
-		const user = await User.findById(userId).session(session);
-		if (!user) {
-			throw new Error('User not found');
-		}
-
-		// 删除用户相关的艺术作品和评论
-		await Artwork.deleteMany({ user: userId }).session(session);
-		await Comment.deleteMany({ user: userId }).session(session);
-
-		// 删除用户
+	if (!user) {
+		res.status(404).json({ message: 'User not found' });
+	} else {
 		await user.remove();
-
-		await session.commitTransaction();
-
-		res.json({
-			status: 'success',
-			message: 'User and all related data deleted successfully',
-		});
-	} catch (error) {
-		await session.abortTransaction();
-		res.status(500).json({ message: error.message || 'Failed to delete user and related data' });
-	} finally {
-		session.endSession();
+		res.json({ message: 'User and all related data deleted successfully' });
 	}
 });
 

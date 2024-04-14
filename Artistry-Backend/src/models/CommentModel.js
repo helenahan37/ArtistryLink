@@ -7,10 +7,10 @@ const CommentSchema = new mongoose.Schema(
 			ref: 'Artwork',
 			required: [true, 'Comment must belong to an artwork'],
 		},
-		user: {
-			type: mongoose.Schema.Types.ObjectId,
+		author: {
+			type: mongoose.Types.ObjectId,
 			ref: 'User',
-			required: [true, 'Comment must belong to a user'],
+			required: true,
 		},
 		content: {
 			type: String,

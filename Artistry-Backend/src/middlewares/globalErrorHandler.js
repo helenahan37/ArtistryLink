@@ -1,17 +1,19 @@
 // handel all errors
 const globalErrorHandler = (err, req, res, next) => {
-	const stack = err?.stack;
-	const statusCode = err?.statusCode ? err?.statusCode : 500;
-	const message = err?.message;
+	const statusCode = err.statusCode || 500;
+	let message = err.message;
 
+	// Handle duplicate key error
 	if (err.code === 11000) {
-		message = 'The provided username or email is already in use.';
-		statusCode = 400;
+		const field = Object.keys(err.keyValue)[0]; // This identifies the field with the duplicate key
+		message = `An account with that ${field} already exists.`;
+		statusCode = 400; // Bad Request
 	}
 
 	res.status(statusCode).json({
-		stack,
-		message,
+		status: 'error',
+		message: message,
+		stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
 	});
 };
 
