@@ -126,7 +126,7 @@ export default function ArtworkDetailPage({ artwork }) {
 							<p className="text-sm text-gray-500">
 								<Link
 									className="text-gray-600 font-semibold text-lg  hover:text-indigo-800 transition duration-300 ease-in-out hover:underline"
-									to={`/users/${selectedArtwork.user?._id}/profile`}>
+									to={`/users/profile/${selectedArtwork.user?._id}`}>
 									Author:{selectedArtwork.user?.username}
 								</Link>
 							</p>
