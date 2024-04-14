@@ -134,21 +134,19 @@ const deleteUser = asyncHandler(async (req, res) => {
 	try {
 		session.startTransaction();
 
-		const user = await User.findById(req.userAuthId).session(session);
+		const userId = req.userAuthId; // 获取用户 ID
+		const user = await User.findById(userId).session(session);
 		if (!user) {
 			throw new Error('User not found');
 		}
 
-		// Delete all related artworks
-		await Artwork.deleteMany({ user: user._id }).session(session);
+		// 删除用户相关的艺术作品和评论
+		await Artwork.deleteMany({ user: userId }).session(session);
+		await Comment.deleteMany({ user: userId }).session(session);
 
-		// Delete all related comments
-		await Comment.deleteMany({ user: user._id }).session(session);
-
-		// Delete the user
+		// 删除用户
 		await user.remove();
 
-		// Commit the transaction
 		await session.commitTransaction();
 
 		res.json({
