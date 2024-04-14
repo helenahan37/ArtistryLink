@@ -1,3 +1,3 @@
-const baseURL = 'https://artistrylink-86fcb3c7726e.herokuapp.com';
+const baseURL = 'https://artistrylink-vaio.onrender.com';
 
 export default baseURL;
