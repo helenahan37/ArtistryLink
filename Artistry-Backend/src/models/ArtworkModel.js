@@ -80,5 +80,18 @@ ArtworkSchema.virtual('username', {
 	options: { select: 'username' },
 });
 
+ArtworkSchema.pre('remove', async function (next) {
+	// Check if there's an image to delete
+	if (this.artworkImg) {
+		try {
+			const fileName = this.artworkImg.split('/').pop().split('.')[0];
+			await cloudinary.uploader.destroy(fileName);
+		} catch (error) {
+			console.error('Failed to delete image:', error);
+		}
+	}
+	next();
+});
+
 const Artwork = mongoose.model('Artwork', ArtworkSchema);
 module.exports = Artwork;
