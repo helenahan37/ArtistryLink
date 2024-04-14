@@ -40,7 +40,6 @@ export default function Example() {
 	}
 	return (
 		<>
-			<Header />
 			<div className="bg-gray-50">
 				<div
 					className="py-24 bg-cover"

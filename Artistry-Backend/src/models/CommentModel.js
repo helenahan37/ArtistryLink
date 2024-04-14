@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const CommentSchema = new mongoose.Schema(
 	{
-		artwrok: {
+		artwork: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Artwork',
 			required: [true, 'Comment must belong to an artwork'],
 		},
 		user: {
-			type: mongoose.Types.ObjectId,
+			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
-			required: true,
+			required: [true, 'Comment must belong to a user'],
 		},
 		content: {
 			type: String,
