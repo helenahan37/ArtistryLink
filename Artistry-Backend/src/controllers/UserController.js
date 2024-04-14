@@ -13,13 +13,23 @@ const registerUser = asyncHandler(async (req, res) => {
 	// Check if email already exists
 	const userExists = await User.findOne({ email });
 	if (userExists) {
-		return res.status(400).json({ message: 'Email already exists' });
+		const error = new Error('Email already exists');
+		error.statusCode = 400;
+		throw error;
 	}
 
 	// Check if username already exists
 	const usernameExists = await User.findOne({ username });
 	if (usernameExists) {
-		return res.status(400).json({ message: 'Username already exists' });
+		const error = new Error('Username already exists');
+		error.statusCode = 400;
+		throw error;
+	}
+
+	if (password.length < 6) {
+		const error = new Error('Password must be at least 6 characters');
+		error.statusCode = 400;
+		throw error;
 	}
 	//hash password
 	const salt = await bcrypt.genSalt(10);
@@ -38,7 +48,7 @@ const registerUser = asyncHandler(async (req, res) => {
 			data: user,
 		});
 	} catch (error) {
-		res.status(500).json({ message: 'Failed to register user', error: error.message });
+		next(error);
 	}
 });
 // @desc    Login user
