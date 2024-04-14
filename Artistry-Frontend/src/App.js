@@ -9,7 +9,6 @@ import ArtworkDetailPage from './pages/ArtworkDetailPage';
 import SettingPage from './pages/SettingPage';
 import GalleryPage from './pages/GalleryPage';
 import AuthRoute from './components/routesProtector/AuthRoute';
-import AuthorProfile from './components/AuthorProfile';
 import UserHeader from './components/UserHeader';
 import Header from './components/Header';
 import { useSelector } from 'react-redux';
@@ -27,7 +26,7 @@ function App() {
 					<Route exact path="/" element={<LandingPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
 					<Route
-						path="/profile"
+						path="/profile/:userId"
 						element={
 							<AuthRoute>
 								<ProfilePage />
@@ -39,7 +38,6 @@ function App() {
 					<Route path="/settings" element={<SettingPage />} />
 					<Route path="/gallery" element={<GalleryPage />} />
 					<Route path="/artworks/:id" element={<ArtworkDetailPage />} />
-					<Route path="/users/:userId/profile" element={<AuthorProfile />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>

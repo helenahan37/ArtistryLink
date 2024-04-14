@@ -4,7 +4,6 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfileAction } from '../redux/slices/users';
 import ArtworksCard from '../components/ArtworksCard';
-import Header from '../components/Header';
 import galleryimg from '../assets/gallery-img.png';
 
 const sortOptions = [{ name: 'Favourite Artworks' }, { name: 'My Artworks' }];
