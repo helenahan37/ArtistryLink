@@ -3,8 +3,7 @@ const { startSession } = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
-const Artwork = require('../models/ArtworkModel');
-const Comment = require('../models/CommentModel');
+
 // @desc    Register user
 // @route   POST users/register
 // @access  Private
@@ -14,24 +13,18 @@ const registerUser = asyncHandler(async (req, res, next) => {
 	// Check if email already exists
 	const userExists = await User.findOne({ email });
 	if (userExists) {
-		const error = new Error('Email already exists');
-		error.statusCode = 400;
-		return next(error);
+		throw new Error('Email already exists');
 	}
 
 	// Check if username already exists
 	const usernameExists = await User.findOne({ username });
 	if (usernameExists) {
-		const error = new Error('Username already exists');
-		error.statusCode = 400;
-		return next(error);
+		throw new Error('Username already exists');
 	}
 
 	// Check password length
 	if (password.length < 6) {
-		const error = new Error('Password must be at least 6 characters');
-		error.statusCode = 400;
-		return next(error);
+		throw new Error('Password must be at least 6 characters');
 	}
 
 	try {
@@ -49,7 +42,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 			data: user,
 		});
 	} catch (error) {
-		next(error);
+		throw new Error('Invalid user data');
 	}
 });
 
