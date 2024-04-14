@@ -1,7 +1,10 @@
 const User = require('../models/UserModel');
+const { startSession } = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
+const Artwork = require('../models/Artwork');
+const Comment = require('../models/Comment');
 
 // @desc    Register user
 // @route   POST users/register
@@ -128,13 +131,37 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const user = await User.findByIdAndDelete(req.userAuthId);
+	const session = await startSession();
+	try {
+		session.startTransaction();
 
-	res.json({
-		status: 'success',
-		message: 'User deleted successfully',
-		user,
-	});
+		const user = await User.findById(req.userAuthId).session(session);
+		if (!user) {
+			throw new Error('User not found');
+		}
+
+		// Delete all related artworks
+		await Artwork.deleteMany({ user: user._id }, { session });
+
+		// Delete all related comments
+		await Comment.deleteMany({ user: user._id }, { session });
+
+		// Delete the user
+		await User.findByIdAndDelete(user._id, { session });
+
+		// Commit the transaction
+		await session.commitTransaction();
+
+		res.json({
+			status: 'success',
+			message: 'User and all related data deleted successfully',
+		});
+	} catch (error) {
+		await session.abortTransaction();
+		res.status(500).json({ message: error.message || 'Failed to delete user and related data' });
+	} finally {
+		session.endSession();
+	}
 });
 
 module.exports = {
