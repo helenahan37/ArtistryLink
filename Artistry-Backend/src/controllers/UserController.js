@@ -3,9 +3,8 @@ const { startSession } = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const generateToken = require('../utils/generateToken');
-const Artwork = require('../models/Artwork');
-const Comment = require('../models/Comment');
-
+const Artwork = require('../models/ArtworkModel');
+const Comment = require('../models/CommentModel');
 // @desc    Register user
 // @route   POST users/register
 // @access  Private
