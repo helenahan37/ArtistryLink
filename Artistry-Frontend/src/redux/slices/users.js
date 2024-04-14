@@ -79,7 +79,7 @@ export const getUserProfileAction = createAsyncThunk(
 					Authorization: `Bearer ${token}`,
 				},
 			};
-			const { data } = await axios.get(`${baseURL}/users/profile/userId`, config);
+			const { data } = await axios.get(`${baseURL}/users/profile`, config);
 			return data;
 		} catch (error) {
 			console.log(error);
