@@ -8,6 +8,12 @@ const UserSchema = new mongoose.Schema({
 		required: [true, 'Username is required'],
 		trim: true,
 		lowercase: true,
+		validate: {
+			validator: function (value) {
+				return value.length >= 4;
+			},
+			message: 'Username must contain at least 4 characters',
+		},
 	},
 	email: {
 		type: String,
@@ -20,7 +26,12 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: [true, 'Please provide a password'],
-		minlength: 4,
+		validate: {
+			validator: function (value) {
+				return value.length >= 4;
+			},
+			message: 'Password must contain at least 4 characters',
+		},
 	},
 	artworks: [
 		{

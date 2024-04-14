@@ -134,7 +134,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 	try {
 		session.startTransaction();
 
-		const userId = req.userAuthId; // 获取用户 ID
+		const userId = req.userAuthId;
 		const user = await User.findById(userId).session(session);
 		if (!user) {
 			throw new Error('User not found');
