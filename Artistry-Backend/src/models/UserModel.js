@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const Artwork = require('../models/ArtworkModel');
+const Comment = require('../models/CommentModel');
 
 const UserSchema = new mongoose.Schema({
 	username: {
@@ -69,6 +71,11 @@ const UserSchema = new mongoose.Schema({
 	},
 });
 
+UserSchema.pre('remove', async function (next) {
+	await Artwork.deleteMany({ user: this._id });
+	await Comment.deleteMany({ user: this._id });
+	next();
+});
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
