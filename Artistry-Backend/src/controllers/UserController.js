@@ -8,14 +8,15 @@ const Comment = require('../models/CommentModel');
 // @desc    Register user
 // @route   POST users/register
 // @access  Private
-const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res, next) => {
 	const { email, password, username, isAdmin } = req.body;
+
 	// Check if email already exists
 	const userExists = await User.findOne({ email });
 	if (userExists) {
 		const error = new Error('Email already exists');
 		error.statusCode = 400;
-		throw error;
+		return next(error);
 	}
 
 	// Check if username already exists
@@ -23,19 +24,19 @@ const registerUser = asyncHandler(async (req, res) => {
 	if (usernameExists) {
 		const error = new Error('Username already exists');
 		error.statusCode = 400;
-		throw error;
+		return next(error);
 	}
 
+	// Check password length
 	if (password.length < 6) {
 		const error = new Error('Password must be at least 6 characters');
 		error.statusCode = 400;
-		throw error;
+		return next(error);
 	}
-	//hash password
-	const salt = await bcrypt.genSalt(10);
-	const hashedPassword = await bcrypt.hash(password, salt);
 
 	try {
+		const salt = await bcrypt.genSalt(10);
+		const hashedPassword = await bcrypt.hash(password, salt);
 		const user = await User.create({
 			username,
 			email,
@@ -51,6 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
 		next(error);
 	}
 });
+
 // @desc    Login user
 // @route   POST users/login
 // @access  Public

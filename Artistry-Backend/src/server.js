@@ -31,9 +31,9 @@ app.use('/artworks', artworkRoutes);
 app.use('/comments', commentRoutes);
 app.use('/admin', adminRoutes);
 
+app.use(notFound);
 // apply error handlers
 app.use(globalErrorHandler);
-app.use(notFound);
 
 module.exports = {
 	app,
