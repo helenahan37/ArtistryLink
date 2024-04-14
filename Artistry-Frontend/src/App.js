@@ -8,15 +8,21 @@ import ProfilePage from './pages/ProfilePage';
 import ArtworkDetailPage from './pages/ArtworkDetailPage';
 import SettingPage from './pages/SettingPage';
 import GalleryPage from './pages/GalleryPage';
-import AdminPage from './pages/AdminPage';
-import AdminRoute from './components/routesProtector/AdminRoute';
 import AuthRoute from './components/routesProtector/AuthRoute';
 import AuthorProfile from './components/AuthorProfile';
+import UserHeader from './components/UserHeader';
+import Header from './components/Header';
+import { useSelector } from 'react-redux';
+import Footer from './components/Footer';
 
 function App() {
+	const user = useSelector((state) => state.users.userAuth.userInfo);
+
 	return (
 		<div className="App">
 			<BrowserRouter>
+				{user ? <UserHeader /> : <Header />}
+
 				<Routes>
 					<Route exact path="/" element={<LandingPage />} />
 					<Route path="/explore" element={<ExplorePage />} />
@@ -34,16 +40,8 @@ function App() {
 					<Route path="/gallery" element={<GalleryPage />} />
 					<Route path="/artworks/:id" element={<ArtworkDetailPage />} />
 					<Route path="/users/:userId/profile" element={<AuthorProfile />} />
-
-					<Route
-						path="/admin"
-						element={
-							<AdminRoute>
-								<AdminPage />
-							</AdminRoute>
-						}
-					/>
 				</Routes>
+				<Footer />
 			</BrowserRouter>
 		</div>
 	);

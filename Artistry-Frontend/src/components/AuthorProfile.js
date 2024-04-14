@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuthorProfileAction } from '../redux/slices/users';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { CheckBadgeIcon } from '@heroicons/react/24/outline';
 import ArtworksCard from '../components/ArtworksCard';
 
@@ -22,8 +20,6 @@ const UserProfilePage = () => {
 
 	return (
 		<>
-			<Header />
-
 			<div className="relative block h-500-px">
 				<div>
 					<img
@@ -71,7 +67,6 @@ const UserProfilePage = () => {
 					))}
 				</div>
 			</div>
-			<Footer />
 		</>
 	);
 };

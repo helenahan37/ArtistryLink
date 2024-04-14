@@ -6,7 +6,6 @@ import { getUserProfileAction } from '../redux/slices/users';
 import ArtworksCard from '../components/ArtworksCard';
 import Header from '../components/Header';
 import galleryimg from '../assets/gallery-img.png';
-import Footer from '../components/Footer';
 
 const sortOptions = [{ name: 'Favourite Artworks' }, { name: 'My Artworks' }];
 
@@ -117,7 +116,6 @@ export default function Example() {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</>
 	);
 }

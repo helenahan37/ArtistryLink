@@ -30,7 +30,7 @@ export default function UserHeader() {
 	// logout user and remove localstorage user info
 	const signOutHandler = (item) => {
 		if (item.name === 'Sign out') {
-			dispatch(signOutAction()); // Dispatch the signout action only if the "Sign out" button is clicked
+			dispatch(signOutAction());
 			setIsSignOutButtonClicked(true);
 			window.location.reload();
 			window.location.href = '/';

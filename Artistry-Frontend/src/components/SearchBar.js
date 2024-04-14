@@ -8,7 +8,7 @@ export default function SearchBar({ onSearch }) {
 	const handleInputChange = (e) => {
 		const value = e.target.value;
 		setSearchValue(value);
-		onSearch(value); // Notify parent component about the search value
+		onSearch(value);
 	};
 
 	return (

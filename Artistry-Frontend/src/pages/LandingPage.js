@@ -1,13 +1,9 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import ArtworksGalleryHome from '../components/ArtworksGalleryHome';
 import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
 	return (
 		<div className="bg-white">
-			{/* Header */}
-			<Header />
 			<main>
 				{/* Hero section */}
 				<div className="relative isolate overflow-hidden bg-gray-900 pb-16 pt-14 sm:pb-20">
@@ -59,8 +55,6 @@ export default function LandingPage() {
 					<ArtworksGalleryHome />
 				</div>
 			</main>
-			{/* Footer */}
-			<Footer />
 		</div>
 	);
 }

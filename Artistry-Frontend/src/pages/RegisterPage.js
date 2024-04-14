@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUserAction } from '../redux/slices/users';
 import React, { useEffect, useState } from 'react';
@@ -39,7 +37,6 @@ export default function Register() {
 
 	return (
 		<>
-			<Header />
 			<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -139,7 +136,6 @@ export default function Register() {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</>
 	);
 }

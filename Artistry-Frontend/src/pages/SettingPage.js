@@ -1,20 +1,18 @@
-import Footer from '../components/Footer';
-import UserHeader from '../components/UserHeader';
 import { useEffect, useState } from 'react';
-import { getUserProfileAction, updateUserProfileAction } from '../redux/slices/users';
+import { getUserProfileAction, updateUserProfileAction, deleteUserProfileAction } from '../redux/slices/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { FailedMessage, GlobalSuccessMessage } from '../utils/alert';
 import LoadingComp from '../components/LoadingComp';
+import { useNavigate } from 'react-router-dom';
 
 export default function SettingPage() {
 	//dispatch
 	const dispatch = useDispatch();
-	//get user profile from
 	useEffect(() => {
 		dispatch(getUserProfileAction());
 	}, [dispatch]);
 	//get data from store
-	const { isUpdated, error, loading, profile } = useSelector((state) => state?.users);
+	const { isUpdated, error, loading, profile, isDeleted } = useSelector((state) => state?.users);
 	//get orders
 
 	const [formData, setFormData] = useState({
@@ -63,9 +61,21 @@ export default function SettingPage() {
 		);
 	};
 
+	//delete account
+	const navigate = useNavigate();
+	const deleteAccountHandler = async () => {
+		try {
+			await dispatch(deleteUserProfileAction()).unwrap();
+			dispatch({ type: 'users/logout' });
+			setTimeout(() => {
+				navigate('/');
+			}, 3000);
+		} catch (error) {
+			console.error('Error during account deletion:', error);
+		}
+	};
 	return (
 		<>
-			<UserHeader />
 			{error && <FailedMessage message={error?.message} />}
 			<div className="flex justify-center items-center">
 				<div className="divide-y divide-dark/5">
@@ -217,18 +227,19 @@ export default function SettingPage() {
 							</p>
 						</div>
 
-						<form className="flex items-start md:col-span-2">
+						<div className="flex items-start md:col-span-2">
+							{error && <FailedMessage message={error?.message} />}
+							{isDeleted && <GlobalSuccessMessage message="Your account has been successfully deleted." />}
 							<button
-								type="submit"
+								onClick={deleteAccountHandler}
+								type="button"
 								className="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400">
 								Yes, delete my account
 							</button>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<Footer />
 		</>
 	);
 }

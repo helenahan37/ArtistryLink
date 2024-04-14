@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { BsHeartFill, BsChatSquareHeart, BsChatSquareHeartFill } from 'react-icons/bs';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import { usePopup } from '../hooks/usePopup';
 import CommentPopup from '../components/CommentPopup';
 import CommentCard from '../components/CommentCard';
@@ -93,7 +91,6 @@ export default function ArtworkDetailPage({ artwork }) {
 	return (
 		<>
 			{' '}
-			<Header />
 			<div className="bg-white mx-auto max-w-2xl px-4 py-16 lg:max-w-7xl lg:px-8 flex flex-col justify-between items-center">
 				{/* description div */}
 				<div className="flex flex-col relative w-full lg:w-1/2 px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
@@ -169,7 +166,6 @@ export default function ArtworkDetailPage({ artwork }) {
 					<span className="text-sm text-gray-600">Add Comment</span>
 				</button>
 			</div>
-			<Footer />
 		</>
 	);
 }

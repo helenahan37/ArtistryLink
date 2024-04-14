@@ -61,6 +61,8 @@ export const signOutAction = createAsyncThunk(
 	async (payload, { rejectWithValue, getState, dispatch }) => {
 		//get token
 		localStorage.removeItem('userInfo');
+		window.location.reload();
+		window.location.href = '/';
 		return true;
 	}
 );
@@ -127,6 +129,27 @@ export const updateUserProfileAction = createAsyncThunk(
 		}
 	}
 );
+
+// delete user profile action
+export const deleteUserProfileAction = createAsyncThunk(
+	'users/deleteProfile',
+	async (playload, { rejectWithValue, getState, dispatch }) => {
+		try {
+			//get token
+			const token = getState()?.users?.userAuth?.userInfo?.token;
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			};
+			const { data } = await axios.delete(`${baseURL}/users/settings/delete`, config);
+			return data;
+		} catch (error) {
+			console.log(error);
+			return rejectWithValue(error?.response?.data);
+		}
+	}
+);
 //users slice
 const usersSlice = createSlice({
 	name: 'users',
@@ -157,8 +180,6 @@ const usersSlice = createSlice({
 			state.error = action.payload;
 			state.loading = false;
 		});
-		//reset error action
-
 		//logout
 		builder.addCase(signOutAction.fulfilled, (state, action) => {
 			state.userAuth.userInfo = null;
@@ -169,7 +190,7 @@ const usersSlice = createSlice({
 
 		//profile
 		builder.addCase(getUserProfileAction.pending, (state, action) => {
-			state.loading = true;
+			state.loading = false;
 		});
 		builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
 			state.profile = action.payload;
@@ -206,6 +227,18 @@ const usersSlice = createSlice({
 			state.profile = null;
 			state.loading = false;
 			state.isUpdated = false;
+			state.error = action.payload;
+		});
+
+		//delete profile
+		builder.addCase(deleteUserProfileAction.fulfilled, (state, action) => {
+			state.userAuth.userInfo = null;
+			state.token = null;
+			state.profile = {};
+			state.error = null;
+			state.isDeleted = true;
+		});
+		builder.addCase(deleteUserProfileAction.rejected, (state, action) => {
 			state.error = action.payload;
 		});
 
