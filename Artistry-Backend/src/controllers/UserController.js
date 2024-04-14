@@ -140,14 +140,13 @@ const getUserProfileById = asyncHandler(async (req, res) => {
 // @route   DELETE /users/settings/delete
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.userAuthId).populate('artworks').populate('comments');
+	const user = await User.findByIdAndDelete(req.userAuthId);
 
-	if (!user) {
-		res.status(404).json({ message: 'User not found' });
-	} else {
-		await user.remove();
-		res.json({ message: 'User and all related data deleted successfully' });
-	}
+	res.json({
+		status: 'success',
+		message: 'User deleted successfully',
+		user,
+	});
 });
 
 module.exports = {
