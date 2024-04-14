@@ -1,6 +1,5 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/outline';
 import { useParams } from 'react-router-dom';
-
 import { useState } from 'react';
 import FileUploadForm from '../components/FileUploadForm';
 import ArtworksCard from '../components/ArtworksCard';
@@ -15,7 +14,6 @@ export default function ProfilePage() {
 	const { userAuth, profile } = useSelector((state) => state.users);
 	const isOwnProfile = userId === userAuth.userInfo?._id;
 
-	// when user click upload button - open the form
 	const openFileForm = () => {
 		setShowFileForm(true);
 	};
