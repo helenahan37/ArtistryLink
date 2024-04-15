@@ -71,13 +71,16 @@ const artworksSlice = createSlice({
 				state.error = action.payload;
 				state.isUploaded = false;
 			});
+
 		builder.addCase(resetSuccessAction.pending, (state) => {
 			state.isDeleted = false;
 			state.isUpdated = false;
+			state.isUploaded = false;
 		});
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
+			state.isUploaded = false;
 		});
 	},
 });

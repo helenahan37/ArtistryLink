@@ -250,6 +250,7 @@ const usersSlice = createSlice({
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
+			state.isUploaded = false;
 		});
 	},
 });
