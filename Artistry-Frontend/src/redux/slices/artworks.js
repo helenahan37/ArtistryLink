@@ -58,6 +58,7 @@ const artworksSlice = createSlice({
 		builder
 			.addCase(uploadArtworkAction.pending, (state) => {
 				state.loading = true;
+				state.isUploaded = false;
 			})
 			.addCase(uploadArtworkAction.fulfilled, (state, action) => {
 				state.loading = false;

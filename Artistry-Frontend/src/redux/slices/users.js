@@ -246,11 +246,14 @@ const usersSlice = createSlice({
 		builder.addCase(resetSuccessAction.pending, (state) => {
 			state.isDeleted = false;
 			state.isUpdated = false;
+			state.isUploaded = false;
+		});
+		builder.addCase(resetSuccessAction.fulfilled, (state) => {
+			state.isUploaded = false;
 		});
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
-			state.isUploaded = false;
 		});
 	},
 });
