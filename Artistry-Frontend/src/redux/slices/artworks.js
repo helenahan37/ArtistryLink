@@ -64,11 +64,13 @@ const artworksSlice = createSlice({
 			.addCase(uploadArtworkAction.pending, (state) => {
 				state.loading = true;
 				state.isAdded = false;
+				state.error = null;
 			})
 			.addCase(uploadArtworkAction.fulfilled, (state, action) => {
 				state.loading = false;
 				state.artwork = action.payload;
 				state.isAdded = true;
+				state.error = null;
 			})
 			.addCase(uploadArtworkAction.rejected, (state, action) => {
 				state.loading = false;
