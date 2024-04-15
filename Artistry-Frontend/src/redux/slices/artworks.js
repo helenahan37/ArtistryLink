@@ -58,7 +58,6 @@ const artworksSlice = createSlice({
 		builder
 			.addCase(uploadArtworkAction.pending, (state) => {
 				state.loading = true;
-				state.isUploaded = false;
 			})
 			.addCase(uploadArtworkAction.fulfilled, (state, action) => {
 				state.loading = false;
@@ -70,18 +69,16 @@ const artworksSlice = createSlice({
 				state.loading = false;
 				state.error = action.payload;
 				state.isUploaded = false;
+			})
+
+			.addCase(resetSuccessAction.fulfilled, (state) => {
+				state.isDeleted = false;
+				state.isUpdated = false;
+				state.isUploaded = false;
+			})
+			.addCase(resetErrAction.fulfilled, (state) => {
+				state.error = null;
 			});
-
-		builder.addCase(resetSuccessAction.pending, (state) => {
-			state.isDeleted = false;
-			state.isUpdated = false;
-			state.isUploaded = false;
-		});
-
-		builder.addCase(resetErrAction.pending, (state) => {
-			state.error = null;
-			state.isUploaded = false;
-		});
 	},
 });
 
