@@ -75,8 +75,9 @@ const artworksSlice = createSlice({
 				state.isDeleted = false;
 				state.isUpdated = false;
 			})
-			.addCase(resetSuccessAction.pending, (state) => {})
-			.addCase(resetErrAction.fulfilled, (state) => {});
+			.addCase(resetErrAction.fulfilled, (state) => {
+				state.error = null;
+			});
 	},
 });
 
