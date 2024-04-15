@@ -7,7 +7,6 @@ import makeAnimated from 'react-select/animated';
 import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
-import { resetArtworkAddedState } from '../redux/slices/artworks';
 
 export default function FileUploadForm({ onClose }) {
 	//animated components for react-select
@@ -96,12 +95,10 @@ export default function FileUploadForm({ onClose }) {
 	//get artwork from store
 	const { isAdded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
-		if (isAdded) {
+		if ((isAdded, error)) {
 			console.log('Artwork upload success');
-
-			dispatch(resetArtworkAddedState());
 		}
-	}, [isAdded, dispatch]);
+	}, [isAdded, error, dispatch]);
 	//onChange
 	const handleOnChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });

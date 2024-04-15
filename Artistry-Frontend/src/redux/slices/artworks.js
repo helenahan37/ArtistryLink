@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from '../../utils/baseURL';
 import { getUserProfileAction } from './users';
+import { resetErrAction, resetSuccessAction } from './globalActions/globalActions';
 
 //initial state
 const initialState = {
@@ -54,17 +55,10 @@ export const uploadArtworkAction = createAsyncThunk(
 const artworksSlice = createSlice({
 	name: 'artworks',
 	initialState,
-	reducers: {
-		resetArtworkAddedState(state) {
-			state.isAdded = false;
-		},
-	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(uploadArtworkAction.pending, (state) => {
 				state.loading = true;
-				state.isAdded = false;
-				state.error = null;
 			})
 			.addCase(uploadArtworkAction.fulfilled, (state, action) => {
 				state.loading = false;
@@ -74,16 +68,24 @@ const artworksSlice = createSlice({
 			})
 			.addCase(uploadArtworkAction.rejected, (state, action) => {
 				state.loading = false;
-				state.artwork = null;
 				state.isAdded = false;
 				state.error = action.payload;
 			})
 			.addCase(getUserProfileAction.fulfilled, (state, action) => {
 				state.artworks = action.payload.artworks;
 			});
+
+		builder.addCase(resetSuccessAction.pending, (state, action) => {
+			state.isDeleted = false;
+			state.isAdded = false;
+			state.isUpdated = false;
+		});
+
+		builder.addCase(resetErrAction.pending, (state) => {
+			state.error = null;
+		});
 	},
 });
-
 // Exports
-export const { resetArtworkAddedState } = artworksSlice.actions;
+export const { resetArtworkAddedState, resetArtworkError } = artworksSlice.actions;
 export default artworksSlice.reducer;
