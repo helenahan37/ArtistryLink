@@ -55,41 +55,34 @@ export const uploadArtworkAction = createAsyncThunk(
 const artworksSlice = createSlice({
 	name: 'artworks',
 	initialState,
+	reducers: {
+		resetArtworkAddedState(state) {
+			state.isAdded = false;
+		},
+	},
 	extraReducers: (builder) => {
-		//create
-		builder.addCase(uploadArtworkAction.pending, (state) => {
-			state.loading = true;
-			state.isAdded = false;
-		});
-
-		builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
-			// Update the artworks state
-			state.artworks = action.payload.artworks;
-		});
-
-		builder.addCase(uploadArtworkAction.fulfilled, (state, action) => {
-			state.loading = false;
-			state.artwork = action.payload;
-			state.isAdded = true;
-		});
-		builder.addCase(uploadArtworkAction.rejected, (state, action) => {
-			state.loading = false;
-			state.artwork = null;
-			state.isAdded = false;
-			state.error = action.payload;
-		});
-
-		//Reset err
-		builder.addCase(resetErrAction.pending, (state, action) => {
-			state.error = null;
-		});
-		//Reset success
-		builder.addCase(resetSuccessAction.pending, (state, action) => {
-			state.isAdded = false;
-		});
+		builder
+			.addCase(uploadArtworkAction.pending, (state) => {
+				state.loading = true;
+				state.isAdded = false;
+			})
+			.addCase(uploadArtworkAction.fulfilled, (state, action) => {
+				state.loading = false;
+				state.artwork = action.payload;
+				state.isAdded = true;
+			})
+			.addCase(uploadArtworkAction.rejected, (state, action) => {
+				state.loading = false;
+				state.artwork = null;
+				state.isAdded = false;
+				state.error = action.payload;
+			})
+			.addCase(getUserProfileAction.fulfilled, (state, action) => {
+				state.artworks = action.payload.artworks;
+			});
 	},
 });
 
-//generate reducer
-const artworksReducer = artworksSlice.reducer;
-export default artworksReducer;
+// Exports
+export const { resetArtworkAddedState } = artworksSlice.actions;
+export default artworksSlice.reducer;

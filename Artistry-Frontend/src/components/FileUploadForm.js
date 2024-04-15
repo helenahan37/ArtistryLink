@@ -7,6 +7,7 @@ import makeAnimated from 'react-select/animated';
 import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
+import { resetArtworkAddedState } from '../redux/slices/artworks';
 
 export default function FileUploadForm({ onClose }) {
 	//animated components for react-select
@@ -96,11 +97,9 @@ export default function FileUploadForm({ onClose }) {
 	const { isAdded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
 		if (isAdded) {
-			// 显示成功消息
 			console.log('Artwork upload success');
 
-			// 可以在这里重置isAdded状态或进行其他操作
-			// dispatch(resetSuccessStateAction());
+			dispatch(resetArtworkAddedState());
 		}
 	}, [isAdded, dispatch]);
 	//onChange
