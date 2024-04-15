@@ -244,6 +244,7 @@ const usersSlice = createSlice({
 
 		//Reset success
 		builder.addCase(resetSuccessAction.pending, (state, action) => {
+			state.isDeleted = false;
 			state.isAdded = false;
 			state.isUpdated = false;
 		});

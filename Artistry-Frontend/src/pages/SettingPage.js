@@ -67,9 +67,7 @@ export default function SettingPage() {
 		try {
 			await dispatch(deleteUserProfileAction()).unwrap();
 			dispatch({ type: 'users/logout' });
-			setTimeout(() => {
-				navigate('/');
-			}, 3000);
+			navigate('/');
 		} catch (error) {
 			console.error('Error during account deletion:', error);
 		}
