@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from '../../utils/baseURL';
-import { getUserProfileAction } from './users';
 import { resetErrAction, resetSuccessAction } from './globalActions/globalActions';
 
 //initial state
@@ -75,9 +74,6 @@ const artworksSlice = createSlice({
 				state.loading = false;
 				state.error = action.payload;
 				state.isAdded = false;
-			})
-			.addCase(getUserProfileAction.fulfilled, (state, action) => {
-				state.artworks = action.payload.artworks;
 			});
 
 		builder.addCase(resetSuccessAction.pending, (state, action) => {
