@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from '../../utils/baseURL';
-import { resetErrAction } from './globalActions/globalActions';
 
 //initial state
 const initialState = {
@@ -53,15 +52,7 @@ export const uploadArtworkAction = createAsyncThunk(
 const artworksSlice = createSlice({
 	name: 'artworks',
 	initialState,
-	reducers: {
-		resetAddState: (state) => {
-			state.isAdded = false;
-		},
-		resetSuccessState: (state) => {
-			state.isDeleted = false;
-			state.isUpdated = false;
-		},
-	},
+
 	extraReducers: (builder) => {
 		builder
 			.addCase(uploadArtworkAction.pending, (state) => {
@@ -79,13 +70,8 @@ const artworksSlice = createSlice({
 				state.error = action.payload;
 				state.isAdded = false;
 			});
-
-		builder.addCase(resetErrAction.pending, (state) => {
-			state.error = null;
-		});
 	},
 });
 
 // Exports
 export default artworksSlice.reducer;
-export const { resetAddState, resetSuccessState } = artworksSlice.actions;
