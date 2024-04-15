@@ -7,7 +7,7 @@ import makeAnimated from 'react-select/animated';
 import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
-import { resetAddState } from '../redux/slices/artworks';
+import { resetAddState, resetSuccessState } from '../redux/slices/artworks';
 import { getUserProfileAction } from '../redux/slices/users';
 
 export default function FileUploadForm({ onClose }) {
@@ -100,6 +100,7 @@ export default function FileUploadForm({ onClose }) {
 		if (isAdded) {
 			dispatch(getUserProfileAction()).then(() => {
 				dispatch(resetAddState());
+				dispatch(resetSuccessState());
 			});
 		}
 	}, [isAdded, dispatch]);

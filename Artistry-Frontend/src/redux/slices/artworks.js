@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import baseURL from '../../utils/baseURL';
-import { resetErrAction, resetSuccessAction } from './globalActions/globalActions';
+import { resetErrAction } from './globalActions/globalActions';
 
 //initial state
 const initialState = {
@@ -57,6 +57,10 @@ const artworksSlice = createSlice({
 		resetAddState: (state) => {
 			state.isAdded = false;
 		},
+		resetSuccessState: (state) => {
+			state.isDeleted = false;
+			state.isUpdated = false;
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -76,16 +80,12 @@ const artworksSlice = createSlice({
 				state.isAdded = false;
 			});
 
-		builder.addCase(resetSuccessAction.pending, (state, action) => {
-			state.isDeleted = false;
-			state.isUpdated = false;
-		});
-
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
 		});
 	},
 });
+
 // Exports
 export default artworksSlice.reducer;
-export const { resetAddState } = artworksSlice.actions;
+export const { resetAddState, resetSuccessState } = artworksSlice.actions;
