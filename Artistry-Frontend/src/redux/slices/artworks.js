@@ -83,9 +83,9 @@ const artworksSlice = createSlice({
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
+			state.isAdded = false;
 		});
 	},
 });
 // Exports
-export const { resetArtworkAddedState, resetArtworkError } = artworksSlice.actions;
 export default artworksSlice.reducer;
