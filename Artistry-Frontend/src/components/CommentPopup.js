@@ -5,6 +5,7 @@ import { XCircleIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { createCommentAction } from '../redux/slices/comments';
 import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingComp from './LoadingComp';
+
 export default function CommentPopup({ onClose, artworkID }) {
 	const dispatch = useDispatch();
 	//---form data---
@@ -25,12 +26,13 @@ export default function CommentPopup({ onClose, artworkID }) {
 
 	const { loading, error, isAdded } = useSelector((state) => state?.comments);
 	const { profile } = useSelector((state) => state?.users);
+
 	return (
 		<>
 			{error && <FailedMessage message={error?.message} />}
 			{isAdded && <GlobalSuccessMessage message="Thanks for your comment" />}
 			<div className="fixed bg-cover bg-center top-0 left-0 w-full h-full flex items-center justify-center z-50 backdrop-filter backdrop-blur-md">
-				<div className="relative transform  overflow-hidden rounded-lg bg-white text-left shadow-xl md:max-w-lg lg:max-w-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:p-6">
+				<div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl md:max-w-lg lg:max-w-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:p-6 border-4 border-indigo-400">
 					<div className="flex w-full h-full space-x-2 ">
 						<div>
 							<img className="inline-block m-2 h-12 w-12 rounded-full" src={profile?.user?.userAvatarImg} alt="" />
