@@ -61,6 +61,12 @@ const artworksSlice = createSlice({
 			state.loading = true;
 			state.isAdded = false;
 		});
+
+		builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
+			// Update the artworks state
+			state.artworks = action.payload.artworks;
+		});
+
 		builder.addCase(uploadArtworkAction.fulfilled, (state, action) => {
 			state.loading = false;
 			state.artwork = action.payload;
@@ -71,10 +77,6 @@ const artworksSlice = createSlice({
 			state.artwork = null;
 			state.isAdded = false;
 			state.error = action.payload;
-		});
-		builder.addCase(getUserProfileAction.fulfilled, (state, action) => {
-			// Update the artworks state
-			state.artworks = action.payload.artworks;
 		});
 
 		//Reset err
