@@ -247,11 +247,9 @@ const usersSlice = createSlice({
 			state.isDeleted = false;
 			state.isAdded = false;
 			state.isUpdated = false;
-			state.loading = false;
 		});
 
 		builder.addCase(resetErrAction.pending, (state) => {
-			state.loading = false;
 			state.error = null;
 			state.isAdded = false;
 		});
