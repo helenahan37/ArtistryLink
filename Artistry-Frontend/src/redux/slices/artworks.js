@@ -65,10 +65,12 @@ const artworksSlice = createSlice({
 				state.artwork = action.payload;
 				state.isAdded = true;
 				state.error = null;
+				setTimeout(() => {
+					state.isAdded = false;
+				}, 500);
 			})
 			.addCase(uploadArtworkAction.rejected, (state, action) => {
 				state.loading = false;
-				state.isAdded = false;
 				state.error = action.payload;
 			})
 			.addCase(getUserProfileAction.fulfilled, (state, action) => {
@@ -77,7 +79,6 @@ const artworksSlice = createSlice({
 
 		builder.addCase(resetSuccessAction.pending, (state, action) => {
 			state.isDeleted = false;
-			state.isAdded = false;
 			state.isUpdated = false;
 		});
 

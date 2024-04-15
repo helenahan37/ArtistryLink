@@ -243,15 +243,13 @@ const usersSlice = createSlice({
 		});
 
 		//Reset success
-		builder.addCase(resetSuccessAction.pending, (state, action) => {
+		builder.addCase(resetSuccessAction.pending, (state) => {
 			state.isDeleted = false;
-			state.isAdded = false;
 			state.isUpdated = false;
 		});
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
-			state.isAdded = false;
 		});
 	},
 });
