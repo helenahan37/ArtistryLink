@@ -94,12 +94,12 @@ export default function FileUploadForm({ onClose }) {
 		setFile(newFile);
 	};
 	//get artwork from store
-	const { isAdded, loading, error } = useSelector((state) => state?.artworks);
+	const { isUploaded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
-		if (isAdded) {
+		if (isUploaded) {
 			dispatch(getUserProfileAction());
 		}
-	}, [isAdded, dispatch]);
+	}, [isUploaded, dispatch]);
 	//onChange
 	const handleOnChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -137,7 +137,7 @@ export default function FileUploadForm({ onClose }) {
 							<label className="mb-5 block text-2xl font-semibold  text-dark">Upload Artwork</label>
 							{error && <FailedMessage message={error?.message} />}
 							{fileErr && <FailedMessage message={fileErr} />}
-							{isAdded && <GlobalSuccessMessage message="Artwork upload success" />}
+							{isUploaded && <GlobalSuccessMessage message="Artwork upload success" />}
 
 							<div className="mb-8">
 								<label
