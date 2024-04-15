@@ -8,12 +8,12 @@ import ProfilePage from './pages/ProfilePage';
 import ArtworkDetailPage from './pages/ArtworkDetailPage';
 import SettingPage from './pages/SettingPage';
 import GalleryPage from './pages/GalleryPage';
-import AuthorProfile from './components/AuthorProfile';
 import AuthRoute from './components/routesProtector/AuthRoute';
 import UserHeader from './components/UserHeader';
 import Header from './components/Header';
 import { useSelector } from 'react-redux';
 import Footer from './components/Footer';
+import AuthorProfile from './components/AuthorProfile';
 
 function App() {
 	const user = useSelector((state) => state.users.userAuth.userInfo);

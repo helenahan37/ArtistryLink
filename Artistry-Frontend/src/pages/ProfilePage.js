@@ -5,28 +5,30 @@ import ArtworksCard from '../components/ArtworksCard';
 import { getUserProfileAction } from '../redux/slices/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { getAuthorProfileAction } from '../redux/slices/users';
+import { useParams } from 'react-router-dom';
 
 export default function ProfilePage() {
-	//upload file form state
-	const [showFileForm, setShowFileForm] = useState(false);
-	const { profile } = useSelector((state) => state.users);
-
-	const openFileForm = () => {
-		setShowFileForm(true);
-	};
-
-	const closeFileForm = () => {
-		setShowFileForm(false);
-	};
-
-	//dispatch
+	const { userId } = useParams();
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(getUserProfileAction());
-	}, [dispatch]);
-	//get data from store
-	const artworks = profile?.user?.artworks || [];
+	const [showFileForm, setShowFileForm] = useState(false);
 
+	const { profile, authorProfile } = useSelector((state) => state.users);
+	const isOwnProfile = !userId || profile?.user?._id === userId;
+
+	useEffect(() => {
+		if (userId) {
+			dispatch(getAuthorProfileAction(userId));
+		} else {
+			dispatch(getUserProfileAction());
+		}
+	}, [userId, dispatch]);
+
+	const openFileForm = () => setShowFileForm(true);
+	const closeFileForm = () => setShowFileForm(false);
+
+	const userProfile = isOwnProfile ? profile : authorProfile;
+	const artworks = userProfile?.user?.artworks || [];
 	return (
 		<>
 			{showFileForm && (
@@ -52,13 +54,13 @@ export default function ProfilePage() {
 						</span>
 					</span>
 					<div>
-						<button
-							type="button"
-							onClick={openFileForm}
-							class="my-5 w-full flex justify-center  hover:text-grey-500 p-4  rounded-full tracking-wide
-                                    font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 hover:text-white shadow-lg cursor-pointer transition ease-in duration-300">
-							Upload Artwork
-						</button>
+						{isOwnProfile && (
+							<button
+								onClick={openFileForm}
+								className="my-5 w-full flex justify-center hover:text-grey-500 p-4 rounded-full tracking-wide font-semibold focus:outline-none focus:shadow-outline hover:bg-indigo-600 hover:text-white shadow-lg cursor-pointer transition ease-in duration-300">
+								Upload Artwork
+							</button>
+						)}
 					</div>
 					<div className="px-6">
 						<div className="flex flex-wrap justify-center">

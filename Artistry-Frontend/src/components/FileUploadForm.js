@@ -98,8 +98,9 @@ export default function FileUploadForm({ onClose }) {
 	const { isAdded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
 		if (isAdded) {
-			dispatch(getUserProfileAction());
-			dispatch(resetAddState());
+			dispatch(getUserProfileAction()).then(() => {
+				dispatch(resetAddState());
+			});
 		}
 	}, [isAdded, dispatch]);
 	//onChange
