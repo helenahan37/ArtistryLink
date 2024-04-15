@@ -8,6 +8,7 @@ import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
 import { resetAddState } from '../redux/slices/artworks';
+import { getUserProfileAction } from '../redux/slices/users';
 
 export default function FileUploadForm({ onClose }) {
 	//animated components for react-select
@@ -97,6 +98,7 @@ export default function FileUploadForm({ onClose }) {
 	const { isAdded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
 		if (isAdded) {
+			dispatch(getUserProfileAction());
 			dispatch(resetAddState());
 		}
 	}, [isAdded, dispatch]);

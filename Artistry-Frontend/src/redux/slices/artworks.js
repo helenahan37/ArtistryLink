@@ -41,7 +41,6 @@ export const uploadArtworkAction = createAsyncThunk(
 
 			//make the http request
 			const { data } = await axios.post(`${baseURL}/artworks/upload`, formData, config);
-			dispatch(getUserProfileAction());
 
 			return data;
 		} catch (error) {
