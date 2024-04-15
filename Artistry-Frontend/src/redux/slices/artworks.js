@@ -55,6 +55,11 @@ export const uploadArtworkAction = createAsyncThunk(
 const artworksSlice = createSlice({
 	name: 'artworks',
 	initialState,
+	reducers: {
+		resetAddState: (state) => {
+			state.isAdded = false;
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(uploadArtworkAction.pending, (state) => {
@@ -67,7 +72,7 @@ const artworksSlice = createSlice({
 				state.error = null;
 				setTimeout(() => {
 					state.isAdded = false;
-				}, 500);
+				}, 0);
 			})
 			.addCase(uploadArtworkAction.rejected, (state, action) => {
 				state.loading = false;
@@ -89,3 +94,4 @@ const artworksSlice = createSlice({
 });
 // Exports
 export default artworksSlice.reducer;
+export const { resetAddState } = artworksSlice.actions;
