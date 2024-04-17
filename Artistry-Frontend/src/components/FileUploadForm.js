@@ -140,7 +140,6 @@ export default function FileUploadForm({ onClose }) {
 							<label className="mb-5 block text-2xl font-semibold  text-dark">Upload Artwork</label>
 							{error && <FailedMessage message={error?.message} />}
 							{fileErr && <FailedMessage message={fileErr} />}
-							{isUploaded && <GlobalSuccessMessage message="Artwork upload success" />}
 
 							<div className="mb-8">
 								<label
