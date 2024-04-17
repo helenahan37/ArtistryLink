@@ -96,18 +96,18 @@ export default function FileUploadForm({ onClose }) {
 	};
 	//get artwork from store
 	const { isUploaded, loading, error } = useSelector((state) => state?.artworks);
-	// useEffect(() => {
-	// 	const resetAndFetchProfile = async () => {
-	// 		if (isUploaded) {
-	// 			// Dispatch reset actions
-	// 			await dispatch(resetSuccessAction()).unwrap();
-	// 			await dispatch(resetErrAction()).unwrap();
-	// 			dispatch(getUserProfileAction());
-	// 		}
-	// 	};
+	useEffect(() => {
+		const resetAndFetchProfile = async () => {
+			if (isUploaded) {
+				// Dispatch reset actions
+				await dispatch(resetSuccessAction()).unwrap();
+				await dispatch(resetErrAction()).unwrap();
+				dispatch(getUserProfileAction());
+			}
+		};
 
-	// 	resetAndFetchProfile();
-	// }, [isUploaded, dispatch]);
+		resetAndFetchProfile();
+	}, [isUploaded, dispatch]);
 	//onChange
 	const handleOnChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
