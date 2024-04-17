@@ -98,7 +98,8 @@ export default function FileUploadForm({ onClose }) {
 	const { isUploaded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
 		if (isUploaded) {
-			resetSuccessAction();
+			GlobalSuccessMessage({ message: 'Artwork upload success' });
+			dispatch(resetSuccessAction());
 			dispatch(getUserProfileAction());
 		}
 	}, [isUploaded, dispatch]);
