@@ -63,6 +63,7 @@ const artworksSlice = createSlice({
 				state.loading = false;
 				state.artworks.push(action.payload);
 				state.isUploaded = true;
+				state.error = null;
 			})
 			.addCase(uploadArtworkAction.rejected, (state, action) => {
 				state.loading = false;

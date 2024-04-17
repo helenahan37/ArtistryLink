@@ -97,12 +97,16 @@ export default function FileUploadForm({ onClose }) {
 	//get artwork from store
 	const { isUploaded, loading, error } = useSelector((state) => state?.artworks);
 	useEffect(() => {
-		if (isUploaded) {
-			GlobalSuccessMessage({ message: 'Artwork uploaded successfully' });
-			dispatch(resetSuccessAction());
-			dispatch(resetErrAction());
-			dispatch(getUserProfileAction());
-		}
+		const resetAndFetchProfile = async () => {
+			if (isUploaded) {
+				// Dispatch reset actions
+				await dispatch(resetSuccessAction()).unwrap();
+				await dispatch(resetErrAction()).unwrap();
+				dispatch(getUserProfileAction());
+			}
+		};
+
+		resetAndFetchProfile();
 	}, [isUploaded, dispatch]);
 	//onChange
 	const handleOnChange = (e) => {
@@ -141,6 +145,7 @@ export default function FileUploadForm({ onClose }) {
 							<label className="mb-5 block text-2xl font-semibold  text-dark">Upload Artwork</label>
 							{error && <FailedMessage message={error?.message} />}
 							{fileErr && <FailedMessage message={fileErr} />}
+							{isUploaded && <GlobalSuccessMessage message="Artwork uploaded successfully" />}
 
 							<div className="mb-8">
 								<label
