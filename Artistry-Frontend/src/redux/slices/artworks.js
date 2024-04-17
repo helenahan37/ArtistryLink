@@ -74,6 +74,7 @@ const artworksSlice = createSlice({
 				state.isUploaded = false;
 				state.isUpdated = false;
 				state.isDeleted = false;
+				state.error = null;
 			})
 			.addCase(resetErrAction.fulfilled, (state) => {
 				state.error = null;
