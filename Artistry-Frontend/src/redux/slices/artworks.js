@@ -76,6 +76,10 @@ const artworksSlice = createSlice({
 				state.isDeleted = false;
 				state.error = null;
 			})
+			.addCase(resetErrAction.pending, (state) => {
+				state.error = null;
+			})
+
 			.addCase(resetErrAction.fulfilled, (state) => {
 				state.error = null;
 			});

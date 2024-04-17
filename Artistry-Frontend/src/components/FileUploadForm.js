@@ -111,6 +111,7 @@ export default function FileUploadForm({ onClose }) {
 	//onChange
 	const handleOnChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
+		dispatch(resetErrAction());
 	};
 
 	//handle submit
