@@ -8,6 +8,7 @@ import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
 import { getUserProfileAction } from '../redux/slices/users';
+import { resetSuccessAction } from '../redux/slices/globalActions/globalActions';
 
 export default function FileUploadForm({ onClose }) {
 	//animated components for react-select
@@ -95,11 +96,12 @@ export default function FileUploadForm({ onClose }) {
 	};
 	//get artwork from store
 	const { isUploaded, loading, error } = useSelector((state) => state?.artworks);
-	// useEffect(() => {
-	// 	if (isUploaded) {
-	// 		dispatch(getUserProfileAction());
-	// 	}
-	// }, [isUploaded, dispatch]);
+	useEffect(() => {
+		if (isUploaded) {
+			resetSuccessAction();
+			dispatch(getUserProfileAction());
+		}
+	}, [isUploaded, dispatch]);
 	//onChange
 	const handleOnChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
