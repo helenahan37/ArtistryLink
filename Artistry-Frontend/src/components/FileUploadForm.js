@@ -8,7 +8,7 @@ import { GlobalSuccessMessage, FailedMessage } from '../utils/alert';
 import LoadingCamp from './LoadingComp';
 import { useEffect } from 'react';
 import { getUserProfileAction } from '../redux/slices/users';
-import { resetSuccessAction } from '../redux/slices/globalActions/globalActions';
+import { resetErrAction, resetSuccessAction } from '../redux/slices/globalActions/globalActions';
 
 export default function FileUploadForm({ onClose }) {
 	//animated components for react-select
@@ -100,6 +100,7 @@ export default function FileUploadForm({ onClose }) {
 		if (isUploaded) {
 			GlobalSuccessMessage({ message: 'Artwork uploaded successfully' });
 			dispatch(resetSuccessAction());
+			dispatch(resetErrAction());
 			dispatch(getUserProfileAction());
 		}
 	}, [isUploaded, dispatch]);
