@@ -221,12 +221,10 @@ const usersSlice = createSlice({
 		builder.addCase(updateUserProfileAction.fulfilled, (state, action) => {
 			state.profile = action.payload;
 			state.loading = false;
-			state.isUpdated = true;
 		});
 		builder.addCase(updateUserProfileAction.rejected, (state, action) => {
 			state.profile = null;
 			state.loading = false;
-			state.isUpdated = false;
 			state.error = action.payload;
 		});
 
