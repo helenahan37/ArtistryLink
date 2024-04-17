@@ -18,7 +18,6 @@ export default function Login() {
 	const handleInput = (e) => {
 		// Dispatch resetErrAction when user modifies input
 		setValues({ ...values, [e.target.name]: e.target.value });
-		dispatch(resetErrAction());
 	};
 
 	const handleSubmit = (e) => {

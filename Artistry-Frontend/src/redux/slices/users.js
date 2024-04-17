@@ -243,17 +243,15 @@ const usersSlice = createSlice({
 		});
 
 		//Reset success
-		builder.addCase(resetSuccessAction.pending, (state) => {
+		builder.addCase(resetSuccessAction.pending, (state, action) => {
 			state.isDeleted = false;
+			state.isAdded = false;
 			state.isUpdated = false;
-			state.isUploaded = false;
-		});
-		builder.addCase(resetSuccessAction.fulfilled, (state) => {
-			state.isUploaded = false;
 		});
 
 		builder.addCase(resetErrAction.pending, (state) => {
 			state.error = null;
+			state.userAuth.error = null;
 		});
 	},
 });
